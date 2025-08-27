@@ -1,0 +1,30 @@
+# Server Configuration
+PORT=5000
+NODE_ENV=development
+
+# Supabase Database - USE SERVICE ROLE KEY (NOT anonymous key)
+# Get this from Supabase dashboard: Settings > API > Service Role
+SUPABASE_URL=https://dzvbtghyiuhrntflwwtw.supabase.co
+SUPABASE_SERVICE_KEY=REPLACE_WITH_YOUR_SERVICE_ROLE_KEY_HERE
+
+# JWT - Use the generated secure secret
+JWT_SECRET=c08728983198b58ec6d73a676798b3b132f1c3b317f27cc753c5efecb50b1d65
+JWT_EXPIRE=7d
+
+# Encryption key - Use the generated secure key
+ENCRYPTION_KEY=c9a4cf1148dd4d01ced00a6ccc6f09f2
+
+# Blockchain RPC URLs (Optional)
+ETHEREUM_RPC_URL=https://mainnet.infura.io/v3/your-infura-project-id
+BSC_RPC_URL=https://bsc-dataseed.binance.org/
+POLYGON_RPC_URL=https://polygon-rpc.com/
+
+# Exchange APIs (Optional)
+COINMARKETCAP_API_KEY=your-coinmarketcap-api-key
+COINGECKO_API_KEY=your-coingecko-api-key
+
+# Email Service (Optional)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
