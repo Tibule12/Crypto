@@ -2,6 +2,7 @@
   "name": "cryptoconnect-frontend",
   "version": "1.0.0",
   "description": "Frontend application for CryptoConnect platform",
+  "homepage": "https://Tibule12.github.io/Crypto",
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
