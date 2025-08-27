@@ -1,0 +1,29 @@
+[33mcommit 304b0c39625b2b100d197f128b3b327a65550a5a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mgh-pages[m[33m, [m[1;31morigin/gh-pages[m[33m)[m
+Author: Tibule12 <thulani.mtshwelo@capaciti.org.za>
+Date:   Wed Aug 27 13:21:22 2025 +0200
+
+    fix: update workflow to deploy to gh-pages branch
+
+[33mcommit adf8ae85a55d40d566e7252f1f541dfb94d748f3[m
+Author: Tibule12 <thulani.mtshwelo@capaciti.org.za>
+Date:   Wed Aug 27 13:17:43 2025 +0200
+
+    fix: update GitHub Actions workflow for proper Pages deployment
+
+[33mcommit 86244d4b3a5192aeeb5198cfe4f40036ffefd15b[m
+Author: Tibule12 <thulani.mtshwelo@capaciti.org.za>
+Date:   Wed Aug 27 13:15:05 2025 +0200
+
+    fix: update GitHub Actions to use npm install instead of npm ci
+
+[33mcommit 7a791b902e3821e3db6e5bcd65c4eed5000500c7[m
+Author: Tibule12 <thulani.mtshwelo@capaciti.org.za>
+Date:   Wed Aug 27 13:13:04 2025 +0200
+
+    feat: add GitHub Actions workflow for GitHub Pages deployment
+
+[33mcommit b0add24df64ce6a0aa82f70a7a8d235e72916927[m
+Author: Tibule12 <thulani.mtshwelo@capaciti.org.za>
+Date:   Wed Aug 27 13:11:20 2025 +0200
+
+    feat: initial commit with full CryptoConnect platform including frontend React app, backend API, and deployment setup
