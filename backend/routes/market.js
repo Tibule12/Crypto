@@ -63,33 +63,28 @@ router.get('/:symbol/history', async (req, res) => {
     const { symbol } = req.params;
     const { days = '7' } = req.query;
 
-    const generateMockHistory = (days) => {
-      const history = [];
-      const basePrice = symbol === 'btc' ? 44000 : 
-                       symbol === 'eth' ? 3100 :
-                       symbol === 'bnb' ? 340 : 1;
+const generateMockHistory = (days) => {
+  const history = [];
+  const basePrice = symbol === 'btc' ? 44000 : 
+                   symbol === 'eth' ? 3100 :
+                   symbol === 'bnb' ? 340 : 1;
 
-      const volatility = symbol === 'btc' ? 0.03 : 
-                        symbol === 'eth' ? 0.04 :
-                        symbol === 'bnb' ? 0.05 : 0.001;
+  for (let i = days; i >= 0; i--) {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
 
-      for (let i = days; i >= 0; i--) {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
+    const priceChange = (Math.random() - 0.5) * 1000; // Simulate price change
+    const price = Math.max(0, basePrice + priceChange); // Ensure price doesn't go negative
 
-        const price = basePrice * (1 + (Math.random() - 0.5) * volatility * 2);
-        const volume = Math.random() * 1000000000 + 500000000;
+    const entry = { 
+      timestamp: date.getTime(),
+      price: parseFloat(price.toFixed(2)),
+      volume: Math.random() * 1000000000 + 500000000
+    };
+    history.push(entry);
+  }
 
-        const entry = { 
-          timestamp: date.getTime(),
-          price: parseFloat(price.toFixed(2)),
-          volume: parseFloat(volume.toFixed(2))
-        };
-        console.log('Generated entry:', entry); // Log each entry
-        history.push(entry);
-      }
-
-      return history; // Ensure this is returned correctly
+  return history; // Ensure this is returned correctly
     };
 
     const history = generateMockHistory(parseInt(days));
