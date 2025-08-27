@@ -2,6 +2,11 @@
 
 CryptoConnect is a blockchain-based platform that enables users to buy, sell, and trade cryptocurrencies securely. The platform provides a user-friendly interface, advanced trading tools, and robust security measures to ensure a seamless experience for users.
 
+## 🚀 Live Deployment
+
+The application is deployed on GitHub Pages and can be accessed at:
+**https://tibule12.github.io/Crypto/**
+
 ## Key Features
 
 1. User Registration and Verification
@@ -11,12 +16,13 @@ CryptoConnect is a blockchain-based platform that enables users to buy, sell, an
 5. Security Measures
 6. User Interface
 
-## Technical Requirements
+## Technical Stack
 
-1. Blockchain Technology
-2. Front-end Development
-3. Back-end Development
-4. Database Management
+- **Frontend**: React.js with modern web technologies
+- **Backend**: Node.js with Express.js
+- **Database**: Supabase PostgreSQL
+- **Authentication**: JWT with bcrypt
+- **Deployment**: GitHub Pages + GitHub Actions CI/CD
 
 ## Development Roadmap
 
@@ -24,7 +30,24 @@ CryptoConnect is a blockchain-based platform that enables users to buy, sell, an
 2. Design and Prototyping
 3. Development
 4. Testing and Debugging
-5. Launch
+5. Launch ✅ (Deployed on GitHub Pages)
+
+## Deployment Status
+
+✅ **Frontend**: Deployed to GitHub Pages via GitHub Actions  
+🔧 **Backend**: Ready for deployment (requires environment variables)  
+📊 **Database**: Supabase configuration ready
+
+## GitHub Actions CI/CD
+
+The project uses GitHub Actions for automatic deployment:
+- Automatic build and deployment on push to `main` branch
+- Frontend deployed to `gh-pages` branch
+- Continuous integration testing
+
+## Setup Instructions
+
+See [setup.md](setup.md) for detailed setup and installation instructions.
 
 ## Potential Revenue Streams
 
