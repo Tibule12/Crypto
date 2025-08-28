@@ -44,7 +44,7 @@ The project uses GitHub Actions for automatic deployment:
 - Automatic build and deployment on push to `main` branch
 - Frontend deployed to `gh-pages` branch
 - Continuous integration testing
-
+- Manual deployment trigger available via GitHub Actions workflow dispatch
 ## Setup Instructions
 
 See [setup.md](setup.md) for detailed setup and installation instructions.
