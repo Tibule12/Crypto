@@ -10,6 +10,8 @@ import Trading from './components/Trading/Trading';
 import Market from './components/Market/Market';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import './App.css';
+import './styles/Enhanced.css';
+import './styles/EnhancedApp.css';
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -17,8 +19,16 @@ function AppContent() {
   if (loading) {
     return (
       <div className="app-loading">
-        <div className="spinner"></div>
-        <p>Loading CryptoConnect...</p>
+        <div className="loading-container">
+          <div className="loading-spinner">
+            <div className="spinner-ring"></div>
+            <div className="spinner-ring"></div>
+            <div className="spinner-ring"></div>
+            <div className="spinner-ring"></div>
+          </div>
+          <h1 className="gradient-text">CryptoConnect</h1>
+          <p>Your gateway to the crypto world</p>
+        </div>
       </div>
     );
   }
