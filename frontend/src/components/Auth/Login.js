@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
+import '../../styles/Auth.css';
 
 const Login = () => {
   const { login } = useAuth();
@@ -46,6 +47,9 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+          </div>
+          <div className="forgot-password">
+            <Link to="/forgot-password">Forgot Password?</Link>
           </div>
           <button type="submit" className="btn btn-primary">Login</button>
         </form>

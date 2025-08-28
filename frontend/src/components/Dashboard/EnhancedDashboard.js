@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import PriceAlerts from '../Alerts/PriceAlerts';
 import './EnhancedDashboard.css';
 
 const EnhancedDashboard = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [wallet, setWallet] = useState([]);
   const [marketData, setMarketData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -102,7 +104,7 @@ const EnhancedDashboard = () => {
           {portfolioWithMarketData.length > 0 ? (
             <div className="portfolio-grid">
               {portfolioWithMarketData.map((asset) => (
-                <div key={asset.symbol} className="portfolio-card">
+                <div key={asset.symbol} className="portfolio-card" onClick={() => navigate('/wallet')} style={{ cursor: 'pointer' }}>
                   <div className="asset-header">
                     <div className="asset-info">
                       <span className="asset-symbol">{asset.symbol ? asset.symbol.toUpperCase() : 'N/A'}</span>
@@ -161,28 +163,28 @@ const EnhancedDashboard = () => {
               <div className="action-icon">💰</div>
               <h3>Buy Crypto</h3>
               <p>Purchase cryptocurrencies instantly</p>
-              <button className="btn btn-primary">Start Trading</button>
+              <button className="btn btn-primary" onClick={() => navigate('/trading')}>Start Trading</button>
             </div>
             
             <div className="action-card">
               <div className="action-icon">📤</div>
               <h3>Send Funds</h3>
               <p>Transfer crypto to other users</p>
-              <button className="btn btn-secondary">Send Now</button>
+              <button className="btn btn-secondary" onClick={() => navigate('/wallet')}>Send Now</button>
             </div>
             
             <div className="action-card">
               <div className="action-icon">📊</div>
               <h3>Market Analysis</h3>
               <p>View detailed market charts</p>
-              <button className="btn btn-secondary">View Charts</button>
+              <button className="btn btn-secondary" onClick={() => navigate('/market')}>View Charts</button>
             </div>
             
             <div className="action-card">
               <div className="action-icon">⚙️</div>
               <h3>Settings</h3>
               <p>Manage your account settings</p>
-              <button className="btn btn-secondary">Configure</button>
+              <button className="btn btn-secondary" onClick={() => navigate('/wallet')}>Configure</button>
             </div>
           </div>
         </div>

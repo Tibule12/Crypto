@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
+const basename = process.env.REACT_APP_BASENAME || '/Crypto';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Login from './components/Auth/Login';
-import Register from './components/Auth/Register';
+import LoginComponent from './components/Auth/Login';
+import RegisterComponent from './components/Auth/Register';
 import Dashboard from './components/Dashboard/Dashboard';
 import Wallet from './components/Wallet/Wallet';
 import Trading from './components/Trading/Trading';
 import Market from './components/Market/Market';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import Welcome from './components/Welcome';
+import Features from './components/Features';
+import ForgotPassword from './components/Auth/ForgotPassword';
+import ResetPassword from './components/Auth/ResetPassword';
 import './App.css';
 import './styles/Enhanced.css';
 import './styles/EnhancedApp.css';
@@ -37,14 +43,22 @@ function AppContent() {
     <div className="App">
       <Header />
       <main className="main-content">
-        <Routes>
+        <Routes basename={basename}>
           <Route 
             path="/login" 
-            element={!user ? <Login /> : <Navigate to="/dashboard" />} 
+            element={!user ? <LoginComponent /> : <Navigate to="/dashboard" />} 
           />
           <Route 
             path="/register" 
-            element={!user ? <Register /> : <Navigate to="/dashboard" />} 
+            element={!user ? <RegisterComponent /> : <Navigate to="/dashboard" />} 
+          />
+          <Route 
+            path="/forgot-password" 
+            element={!user ? <ForgotPassword /> : <Navigate to="/dashboard" />} 
+          />
+          <Route 
+            path="/reset-password" 
+            element={!user ? <ResetPassword /> : <Navigate to="/dashboard" />} 
           />
           <Route 
             path="/dashboard" 
@@ -64,7 +78,15 @@ function AppContent() {
           />
           <Route 
             path="/" 
-            element={<Navigate to={user ? "/dashboard" : "/login"} />} 
+            element={<Welcome />} 
+          />
+          <Route 
+            path="/welcome" 
+            element={<Welcome />} 
+          />
+          <Route 
+            path="/features" 
+            element={<Features />} 
           />
         </Routes>
       </main>

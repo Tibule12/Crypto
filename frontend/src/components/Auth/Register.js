@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
+import '../../styles/Auth.css';
 
 const Register = () => {
   const { register } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -15,7 +15,12 @@ const Register = () => {
     e.preventDefault();
     setError('');
 
-    const response = await register({ email, password, firstName, lastName });
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    const response = await register(email, password);
     if (response.success) {
       navigate('/dashboard');
     } else {
@@ -29,26 +34,6 @@ const Register = () => {
         <h2 className="auth-title">Register</h2>
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label">First Name</label>
-            <input
-              type="text"
-              className="form-input"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Last Name</label>
-            <input
-              type="text"
-              className="form-input"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
-          </div>
           <div className="form-group">
             <label className="form-label">Email</label>
             <input
@@ -66,6 +51,16 @@ const Register = () => {
               className="form-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Confirm Password</label>
+            <input
+              type="password"
+              className="form-input"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
           </div>

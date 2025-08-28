@@ -17,11 +17,12 @@ POLYGON_RPC_URL=https://polygon-rpc.com/
 COINMARKETCAP_API_KEY=your-coinmarketcap-api-key
 COINGECKO_API_KEY=your-coingecko-api-key
 
-## Email Service (Optional)
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your-email@gmail.com
-SMTP_PASS=your-app-password
+## Email Service (Optional - for password reset functionality)
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASSWORD=your-app-password
+EMAIL_FROM=Your App Name <your-email@gmail.com>
+EMAIL_SERVICE=gmail
+FRONTEND_URL=http://localhost:3000
 
 ## Security
 ENCRYPTION_KEY=your-32-character-encryption-key
