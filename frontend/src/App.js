@@ -43,7 +43,7 @@ function AppContent() {
     <div className="App">
       <Header />
       <main className="main-content">
-        <Routes basename={basename}>
+        <Routes>
           <Route 
             path="/login" 
             element={!user ? <LoginComponent /> : <Navigate to="/dashboard" />} 
@@ -98,7 +98,7 @@ function AppContent() {
 function App() {
   return (
     <AuthProvider>
-      <Router>
+<Router basename={basename}>
         <AppContent />
       </Router>
     </AuthProvider>
