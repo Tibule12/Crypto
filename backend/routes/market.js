@@ -7,6 +7,43 @@ const router = express.Router();
 // Get market data for all supported cryptocurrencies
 router.get('/prices', async (req, res) => {
   try {
+    // Try to fetch real data from CoinGecko API first
+    try {
+      const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
+        params: {
+          vs_currency: 'usd',
+          ids: 'bitcoin,ethereum,binancecoin,tether,cardano,solana,ripple,polkadot,dogecoin,shiba-inu',
+          order: 'market_cap_desc',
+          per_page: 50,
+          page: 1,
+          sparkline: false,
+          price_change_percentage: '24h'
+        },
+        timeout: 5000 // 5 second timeout
+      });
+
+      // Transform the data to match our frontend format
+      const prices = response.data.map(coin => ({
+        id: coin.id,
+        symbol: coin.symbol,
+        name: coin.name,
+        current_price: coin.current_price,
+        price_change_24h: coin.price_change_24h,
+        price_change_percentage_24h: coin.price_change_percentage_24h,
+        market_cap: coin.market_cap,
+        volume_24h: coin.total_volume,
+        image: coin.image,
+        last_updated: coin.last_updated
+      }));
+
+      console.log('✅ Successfully fetched real market data from CoinGecko');
+      return res.json({ prices });
+    } catch (apiError) {
+      console.warn('⚠️ CoinGecko API failed, falling back to mock data:', apiError.message);
+      // Continue to mock data fallback
+    }
+
+    // Fallback to mock data if API fails
     const mockPrices = [
       {
         id: 'bitcoin',
@@ -63,32 +100,76 @@ router.get('/:symbol/history', async (req, res) => {
     const { symbol } = req.params;
     const { days = '7' } = req.query;
 
-const generateMockHistory = (days) => {
-  const history = [];
-  const basePrice = symbol === 'btc' ? 44000 : 
-                   symbol === 'eth' ? 3100 :
-                   symbol === 'bnb' ? 340 : 1;
-
-  for (let i = days; i >= 0; i--) {
-    const date = new Date();
-    date.setDate(date.getDate() - i);
-
-    const priceChange = (Math.random() - 0.5) * 1000; // Simulate price change
-    const price = Math.max(0, basePrice + priceChange); // Ensure price doesn't go negative
-
-    const entry = { 
-      timestamp: date.getTime(),
-      price: parseFloat(price.toFixed(2)),
-      volume: Math.random() * 1000000000 + 500000000
+    // Map our symbols to CoinGecko IDs
+    const coinGeckoIds = {
+      'btc': 'bitcoin',
+      'eth': 'ethereum',
+      'bnb': 'binancecoin',
+      'usdt': 'tether',
+      'ada': 'cardano',
+      'sol': 'solana',
+      'xrp': 'ripple',
+      'dot': 'polkadot',
+      'doge': 'dogecoin',
+      'shib': 'shiba-inu'
     };
-    history.push(entry);
-  }
 
-  return history; // Ensure this is returned correctly
+    const coinId = coinGeckoIds[symbol.toLowerCase()];
+
+    if (!coinId) {
+      return res.status(400).json({ error: 'Unsupported cryptocurrency symbol' });
+    }
+
+    // Try to fetch real data from CoinGecko API first
+    try {
+      const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`, {
+        params: {
+          vs_currency: 'usd',
+          days: days,
+          interval: days <= 1 ? 'hourly' : 'daily'
+        },
+        timeout: 5000
+      });
+
+      const history = response.data.prices.map(([timestamp, price]) => ({
+        timestamp,
+        price,
+        volume: response.data.total_volumes.find(v => v[0] === timestamp)?.[1] || 0
+      }));
+
+      console.log(`✅ Successfully fetched real price history for ${symbol} from CoinGecko`);
+      return res.json({ symbol, history });
+    } catch (apiError) {
+      console.warn(`⚠️ CoinGecko API failed for ${symbol}, falling back to mock data:`, apiError.message);
+      // Continue to mock data fallback
+    }
+
+    // Fallback to mock data if API fails
+    const generateMockHistory = (days) => {
+      const history = [];
+      const basePrice = symbol === 'btc' ? 44000 : 
+                       symbol === 'eth' ? 3100 :
+                       symbol === 'bnb' ? 340 : 1;
+
+      for (let i = days; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+
+        const priceChange = (Math.random() - 0.5) * 1000; // Simulate price change
+        const price = Math.max(0, basePrice + priceChange); // Ensure price doesn't go negative
+
+        const entry = { 
+          timestamp: date.getTime(),
+          price: parseFloat(price.toFixed(2)),
+          volume: Math.random() * 1000000000 + 500000000
+        };
+        history.push(entry);
+      }
+
+      return history;
     };
 
     const history = generateMockHistory(parseInt(days));
-    console.log('Generated history:', JSON.stringify(history, null, 2));
     res.setHeader('Content-Type', 'application/json');
     res.json({ symbol, history });
   } catch (error) {

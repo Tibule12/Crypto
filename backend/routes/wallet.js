@@ -239,4 +239,70 @@ router.post('/:walletId/send', authenticateToken, async (req, res) => {
   }
 });
 
+// Get user transactions
+router.get('/transactions', authenticateToken, async (req, res) => {
+  try {
+    if (isMockMode) {
+      // Mock transactions for demo purposes
+      const mockTransactions = [
+        {
+          id: 'tx1',
+          type: 'RECEIVE',
+          symbol: 'ETH',
+          amount: 1.5,
+          value: 4500,
+          timestamp: new Date(Date.now() - 86400000), // 1 day ago
+          status: 'COMPLETED'
+        },
+        {
+          id: 'tx2',
+          type: 'SEND',
+          symbol: 'BTC',
+          amount: 0.1,
+          value: 4000,
+          timestamp: new Date(Date.now() - 172800000), // 2 days ago
+          status: 'COMPLETED'
+        },
+        {
+          id: 'tx3',
+          type: 'RECEIVE',
+          symbol: 'USDT',
+          amount: 100,
+          value: 100,
+          timestamp: new Date(Date.now() - 259200000), // 3 days ago
+          status: 'COMPLETED'
+        }
+      ];
+      
+      return res.json({ transactions: mockTransactions });
+    }
+
+    const { data: transactions, error } = await db
+      .from('transactions')
+      .select('*')
+      .eq('user_id', req.userId)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      throw error;
+    }
+
+    // Format transactions for frontend
+    const formattedTransactions = transactions.map(tx => ({
+      id: tx.id,
+      type: tx.type,
+      symbol: tx.currency,
+      amount: tx.amount,
+      value: tx.amount * 100, // Mock value calculation
+      timestamp: tx.created_at,
+      status: tx.status
+    }));
+
+    res.json({ transactions: formattedTransactions });
+  } catch (error) {
+    console.error('Get transactions error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 module.exports = router;
