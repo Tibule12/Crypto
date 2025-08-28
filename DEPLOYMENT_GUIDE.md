@@ -6,27 +6,33 @@ The error message "Branch 'main' is not allowed to deploy to github-pages due to
 
 ## Solution Implemented
 
-We've updated the deployment workflow in `.github/workflows/deploy.yml` to use the `peaceiris/actions-gh-pages@v3` action instead of the built-in GitHub Pages deployment action. This approach:
-
-1. Builds the React frontend application on pushes to the `main` branch
-2. Deploys the built files to the `gh-pages` branch
-3. Bypasses the environment protection rules that were blocking deployment
+We've updated the deployment workflow in `.github/workflows/deploy.yml` to use a personal access token for authentication, which bypasses the environment protection rules that were blocking deployment.
 
 ## How the New Deployment Process Works
 
-1. **Trigger**: The workflow runs automatically on pushes to the `main` branch or can be manually triggered via the GitHub Actions interface
-2. **Build**: The React frontend is built using `npm run build`
-3. **Deploy**: The built files are deployed to the `gh-pages` branch using the peaceiris GitHub Pages action
-4. **Access**: The deployed site is accessible at `https://[username].github.io/Crypto/`
+1. **Trigger**: The workflow runs automatically on pushes to the `main` branch
+2. **Setup**: Node.js environment is configured and dependencies are installed using `npm ci` for faster installs
+3. **Build**: The React frontend is built using `npm run build`
+4. **Deploy**: The built files are deployed to GitHub Pages using the peaceiris GitHub Pages action with a personal access token
+5. **Access**: The deployed site is accessible at `https://[username].github.io/Crypto/`
 
-## Manual Deployment Trigger
+## Setting Up the DEPLOY_TOKEN Secret
 
-In addition to automatic deployment on pushes to `main`, you can also manually trigger the deployment:
+To make the deployment workflow work, you need to create a personal access token and add it as a secret in your repository:
 
-1. Go to the **Actions** tab in your GitHub repository
-2. Select the **Deploy to GitHub Pages** workflow
-3. Click **Run workflow** and select the `main` branch
-4. Click **Run workflow** to start the deployment
+1. Go to your GitHub **Settings** (not the repository settings)
+2. Click on **Developer settings** in the left sidebar
+3. Click on **Personal access tokens** > **Tokens (classic)**
+4. Click **Generate new token** > **Generate new token (classic)**
+5. Give the token a name (e.g., "Deploy to GitHub Pages")
+6. Select the `public_repo` scope
+7. Click **Generate token**
+8. Copy the generated token (you won't see it again)
+9. Go to your repository **Settings**
+10. Click on **Secrets and variables** > **Actions**
+11. Click **New repository secret**
+12. Set the name to `DEPLOY_TOKEN` and paste the token value
+13. Click **Add secret**
 
 ## Troubleshooting
 
@@ -45,6 +51,10 @@ In addition to automatic deployment on pushes to `main`, you can also manually t
    - Go to **Settings** > **Actions** > **General**
    - Under "Workflow permissions", ensure "Read and write permissions" is selected
 
+4. **Verify DEPLOY_TOKEN Secret**:
+   - Go to **Settings** > **Secrets and variables** > **Actions**
+   - Ensure the `DEPLOY_TOKEN` secret exists and has the correct value
+
 ### Environment Protection Rules
 
 If you prefer to use the original GitHub Pages deployment approach with environment protection:
@@ -57,5 +67,6 @@ If you prefer to use the original GitHub Pages deployment approach with environm
 ## Additional Notes
 
 - The deployment process now adds a `.nojekyll` file to the build directory to prevent GitHub Pages from treating the site as a Jekyll site
-- The workflow includes a manual trigger option for additional flexibility
-- All deployment artifacts are stored in the `frontend/build` directory before deployment
+- The workflow uses `npm ci` instead of `npm install` for faster and more reliable dependency installation
+- Node.js version 16 is used for compatibility with the deployment action
+- Caching is implemented for node modules to speed up subsequent builds

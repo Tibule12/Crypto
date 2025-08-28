@@ -2,6 +2,12 @@
 
 CryptoConnect is a blockchain-based platform that enables users to buy, sell, and trade cryptocurrencies securely. The platform provides a user-friendly interface, advanced trading tools, and robust security measures to ensure a seamless experience for users.
 
+## Deployment Status
+
+✅ **Frontend**: Deployed to GitHub Pages via GitHub Actions with personal access token
+🔧 **Backend**: Ready for deployment (requires environment variables)
+📊 **Database**: Supabase configuration ready
+
 ## 🚀 Live Deployment
 
 The application is deployed on GitHub Pages and can be accessed at:
@@ -44,7 +50,7 @@ The application is deployed on GitHub Pages and can be accessed at:
 
 The project uses GitHub Actions for automatic deployment:
 - Automatic build and deployment on push to `main` branch
-- Frontend deployed to `gh-pages` branch
+- Frontend deployed to `gh-pages` branch using personal access token
 - Continuous integration testing
 - Manual deployment trigger available via GitHub Actions workflow dispatch
 ## Setup Instructions
