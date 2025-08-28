@@ -7,6 +7,8 @@ CryptoConnect is a blockchain-based platform that enables users to buy, sell, an
 The application is deployed on GitHub Pages and can be accessed at:
 **https://tibule12.github.io/Crypto/**
 
+<!-- Deployment triggered at $(date) -->
+
 ## Key Features
 
 1. User Registration and Verification
