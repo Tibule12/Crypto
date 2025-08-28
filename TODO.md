@@ -12,6 +12,10 @@
 - [x] Create PriceAlerts component with basic functionality
 - [x] Integrate PriceAlerts into EnhancedDashboard
 - [x] Add CSS styling for PriceAlerts component
+- [x] Implement password reset functionality with email integration
+- [x] Create backend API endpoints for password reset
+- [x] Add frontend components for password reset flow
+- [x] Update environment variables documentation
 
 ### New Features Implementation Progress:
 

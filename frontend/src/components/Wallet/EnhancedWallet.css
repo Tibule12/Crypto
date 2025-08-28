@@ -208,28 +208,31 @@
   color: white;
 }
 
-/* Empty Wallet */
-.empty-wallet {
-  text-align: center;
-  padding: 60px 40px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 16px;
-  border: 2px dashed rgba(255, 255, 255, 0.1);
+/* Expanded Asset Details */
+.asset-expanded-details {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.empty-icon {
-  font-size: 3rem;
-  margin-bottom: 16px;
+.asset-expanded-details .detail-row {
+  margin-bottom: 10px;
 }
 
-.empty-wallet h3 {
-  font-size: 1.5rem;
-  margin-bottom: 8px;
-  color: white;
+.asset-expanded-details .detail-label {
+  font-size: 0.8rem;
 }
 
-.empty-wallet p {
-  color: rgba(255, 255, 255, 0.7);
+.asset-expanded-details .detail-value {
+  font-size: 0.9rem;
+}
+
+.asset-expanded-details .detail-value.positive {
+  color: #4caf50;
+}
+
+.asset-expanded-details .detail-value.negative {
+  color: #f44336;
 }
 
 /* Quick Stats */

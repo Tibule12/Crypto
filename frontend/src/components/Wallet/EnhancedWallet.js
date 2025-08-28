@@ -11,6 +11,7 @@ const EnhancedWallet = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedCrypto, setSelectedCrypto] = useState('');
+  const [expandedAsset, setExpandedAsset] = useState(null);
 
   useEffect(() => {
     fetchWalletData();
@@ -151,7 +152,12 @@ const EnhancedWallet = () => {
               {portfolioWithMarketData.length > 0 ? (
                 <div className="assets-grid">
                   {portfolioWithMarketData.map((asset) => (
-                    <div key={asset.symbol} className="asset-card">
+                    <div 
+                      key={asset.symbol} 
+                      className="asset-card"
+                      onClick={() => setExpandedAsset(expandedAsset === asset.symbol ? null : asset.symbol)}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <div className="asset-header">
                         <div className="asset-info">
                           <span className="asset-symbol">{asset.symbol ? asset.symbol.toUpperCase() : 'N/A'}</span>
@@ -178,6 +184,21 @@ const EnhancedWallet = () => {
                           </span>
                         </div>
                       </div>
+
+                      {expandedAsset === asset.symbol && (
+                        <div className="asset-expanded-details">
+                          <div className="detail-row">
+                            <span className="detail-label">24h Change</span>
+                            <span className={`detail-value ${asset.priceChange >= 0 ? 'positive' : 'negative'}`}>
+                              {asset.priceChange >= 0 ? '+' : ''}{asset.priceChange.toFixed(2)}%
+                            </span>
+                          </div>
+                          <div className="detail-row">
+                            <span className="detail-label">Asset ID</span>
+                            <span className="detail-value">{asset.id || 'N/A'}</span>
+                          </div>
+                        </div>
+                      )}
 
                       <div className="asset-actions">
                         <button className="btn btn-secondary btn-sm">Send</button>
